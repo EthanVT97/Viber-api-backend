@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: viber-bot-backend
+    env: node
+    plan: free
+    branch: main
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: REAL_VIBER_BOT_TOKEN
+        value: your_real_viber_token
+      - key: JWT_SECRET
+        value: supersecretjwtkey
+      - key: PORT
+        value: 3000
