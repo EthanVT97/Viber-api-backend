@@ -1,14 +1,12 @@
-const { createLogger, format, transports } = require('winston');
+function info(message, meta) {
+  console.log(`INFO: ${message}`, meta || {});
+}
 
-const logger = createLogger({
-  level: 'info',
-  format: format.combine(
-    format.timestamp(),
-    format.json()
-  ),
-  transports: [
-    new transports.Console()
-  ]
-});
+function error(message, meta) {
+  console.error(`ERROR: ${message}`, meta || {});
+}
 
-module.exports = logger;
+module.exports = {
+  info,
+  error,
+};
