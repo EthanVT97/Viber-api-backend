@@ -26,6 +26,7 @@ async function updateBotInfo(req, res) {
     );
 
     // Log success
+    console.log("Update Data From Client:", req.body);
     logger.info('Bot info updated', {
       clientId: client.clientId,
       sessionId: client.sessionId,
