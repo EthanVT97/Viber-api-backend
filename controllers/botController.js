@@ -16,34 +16,34 @@ async function updateBotInfo(req, res) {
   }
 
   try {
-    // Update Viber bot info via platformAdapter
+    const payload = {
+      ...(updateData.name && { name: updateData.name }),
+      ...(updateData.avatar && { avatar: updateData.avatar }),
+    };
+
+    // Debug logs
+    console.log('REAL_VIBER_BOT_TOKEN:', process.env.REAL_VIBER_BOT_TOKEN);
+    console.log('Payload:', payload);
+
     const result = await platformAdapter.updateViberBotInfo(
       process.env.REAL_VIBER_BOT_TOKEN,
-      {
-        ...(updateData.name && { name: updateData.name }),
-        ...(updateData.avatar && { avatar: updateData.avatar }),
-      }
+      payload
     );
 
-    // Log success
-    console.log("Update Data From Client:", req.body);
     logger.info('Bot info updated', {
       clientId: client.clientId,
       sessionId: client.sessionId,
       updateData,
     });
 
-    // Respond success
     res.json({ success: true, result });
   } catch (err) {
-    // Log failure
+    console.error('Error updating bot info:', err);
     logger.error('Failed to update bot info', {
       clientId: client.clientId,
       sessionId: client.sessionId,
       error: err.message,
     });
-
-    // Respond failure
     res.status(500).json({ error: 'Failed to update bot info' });
   }
 }
